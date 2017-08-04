@@ -10,7 +10,7 @@ start
 
 reset
 {
-	return (current.gameTime > 0 && current.gameTime < 0.05)
+	return (current.gameTime > 0 && current.gameTime < 0.05);
 }
 
 isLoading
