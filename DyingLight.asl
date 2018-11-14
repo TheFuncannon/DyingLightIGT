@@ -1,24 +1,37 @@
-state("DyingLightGame")
+sstate("DyingLightGame")
+
 {
-	float gameTime: "engine_x64_rwdi.dll", 0x00A2CB60, 0x338, 0x0, 0x8, 0x300, 0x460;
+	int Loading1: "engine_x64_rwdi.dll", 0xA2C234;
+	int intro: "gamedll_x64_rwdi.dll", 0x1D512E0;
+	
+}
+
+update
+{
+	vars.dostart = false;
+	vars.isLoading = false;
+	
+	if (old.intro != current.intro && current.intro != 1)
+	{
+		vars.dostart = true;
+	}
+	
+	
+	if (current.Loading1 != 0)
+	{
+		vars.isLoading = true;
+	}
 }
 
 start
 {
-	return (current.gameTime < 1 && current.gameTime > 0.05);
+	return vars.dostart;
 }
 
-reset
-{
-	return (current.gameTime > 0 && current.gameTime < 0.05);
-}
 
 isLoading
+
 {
-	return true;
+	return vars.isLoading;
 }
 
-gameTime
-{
-	return TimeSpan.FromSeconds(current.gameTime);
-}
